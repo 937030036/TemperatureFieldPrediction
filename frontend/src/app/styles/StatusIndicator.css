@@ -1,0 +1,21 @@
+.IndicatorContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.IndicatorDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.IndicatorLabel {
+    font-size: 0.9em;
+}
+
+.IndicatorValue {
+    font-weight: bold;
+    margin-left: 5px;
+}

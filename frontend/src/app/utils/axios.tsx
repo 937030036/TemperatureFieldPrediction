@@ -14,7 +14,7 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error)
 })
 axios.interceptors.request.use((config) => {
-    console.log(config)
+    // console.log(config)
     config.headers['Accept'] = 'application/vnd.dpexpo.v1+json'
     config.baseURL = baseURL
     config.timeout = 10000
@@ -27,6 +27,9 @@ axios.interceptors.request.use((config) => {
 export function getAxios({
     url,
     params = {}
+}: {
+    url: string;
+    params?: Record<string, any>;
 }) {
     return new Promise((resolve, reject) => {
         axios.get(url, {

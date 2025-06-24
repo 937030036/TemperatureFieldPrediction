@@ -1,8 +1,7 @@
 import React from 'react';
-import './TemperatureGrid.css';
+import '../styles/TemperatureGrid.css';
 
 const TemperatureGrid = ({ data }: { data: string[][] }) => {
-  console.log('TemperatureGrid data:', data);
   return (
     <div className="temperature-grid">
       {data.map((row, rowIndex) => (

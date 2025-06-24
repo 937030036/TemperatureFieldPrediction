@@ -1,4 +1,4 @@
-import './TemperatureDisplay.css';
+import '../styles/TemperatureDisplay.css';
 import TemperatureGrid from './TemperatureGrid';
 import BarChart from './BarChart';
 import { useEffect, useState } from 'react';
@@ -28,15 +28,12 @@ const TemperatureDisplay = () => {
 
   async function getData() {
     try {
-      const response = await getGridData();
-      console.log("111", response);
+      const response: any = await getGridData();
       const gridData = await response.data;
-      console.log('Grid Data:', gridData);
       setGridData(gridData);
     } catch (error) {
       console.error('Failed to fetch grid data:', error);
     }
-
   };
 
   return (

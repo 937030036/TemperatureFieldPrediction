@@ -1,0 +1,16 @@
+.MainDisplayContainer {
+    flex: 1;
+    background-color: #0f2543;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.BarContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

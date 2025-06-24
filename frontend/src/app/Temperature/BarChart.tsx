@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './BarChart.css';
+import '../styles/BarChart.css';
 
 const BarChart = ({ position }: { position: 'top' | 'bottom' | 'left' | 'right' }) => {
   // Generate random bar data
@@ -12,7 +12,6 @@ const BarChart = ({ position }: { position: 'top' | 'bottom' | 'left' | 'right' 
   };
 
   const bars = generateBars();
-
   return (
     <div className={`bar-container ${position}`}>
       {bars.map((bar, index) => (

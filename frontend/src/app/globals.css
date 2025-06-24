@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+.AppContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #0a1929;
+  color: white;
+}
+
+.MainContent {
+  display: flex;
+  flex: 1;
+}
+
+.ContentArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
