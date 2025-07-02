@@ -3,7 +3,7 @@ from flask_cors import CORS
 import numpy as np
 from ModelPredict import ModelPredict
 import torch.nn as nn
-import math
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -63,17 +63,18 @@ def hello_world():  # put application's code here
 @app.route('/grid', methods=['GET'])
 def get_griddata():  # put application's code here
 
+    start = time.time()
+
     sample_input = ((np.random.rand(232) * 200 + 300)
-                    .reshape(1, -1))
+                    .reshape(-1, 1))
     res = list(ModelPredict.predict(sample_input)[0])
     tmp = []
     for i in res:
         tmp.append(round(float(i), 2))
-    return tmp, 200
 
-    data = np.random.uniform(800, 1300, (3, 4)).round(2)
-    response = {"data": data.tolist()}
-    return jsonify(response), 200
+    end = time.time()
+    print(end - start)
+    return tmp, 200
 
 
 if __name__ == '__main__':
