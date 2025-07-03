@@ -5,7 +5,7 @@ function StatusBar({ lastUpdated }: { lastUpdated: any }) {
   return (
     <div className="StatusBarContainer">
       <div className="LeftSection">
-        <div className="Title">锅炉监测</div>
+        <div className="Title">锅炉监测45米温度场（每5秒刷新）</div>
         {/* <span>上次更新时间：{lastUpdated}</span> */}
       </div>
       <div className="RightSection">

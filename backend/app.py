@@ -67,14 +67,32 @@ def get_griddata():  # put application's code here
 
     sample_input = ((np.random.rand(232) * 200 + 300)
                     .reshape(-1, 1))
-    res = list(ModelPredict.predict(sample_input)[0])
+    res = ModelPredict.predict(sample_input)[0]
+    res_33 = res[0:28].reshape(4, 7)
+    res_45 = res[30:-2].reshape(4, 7)
+    res_45 = list(res_45)
     tmp = []
-    for i in res:
-        tmp.append(round(float(i), 2))
+    for row in res_45:
+        rowlist = []
+        for item in row:
+            rowlist.append(round(float(item), 2))
+        tmp.append(rowlist)
+
+    sample_input = sample_input.reshape(1, -1)
+    tmp_232 = []
+    for i in sample_input[0]:
+        tmp_232.append(round(float(i), 2))
+
+    back = list(tmp_232[:60])
+    front = list(tmp_232[60:120])
+    right = list(tmp_232[120:176])
+    left = list(tmp_232[176:])
+
+    response = {'resdata': tmp, 'back': back, 'front': front, 'right': right, 'left': left}
 
     end = time.time()
     print(end - start)
-    return tmp, 200
+    return jsonify(response), 200
 
 
 if __name__ == '__main__':

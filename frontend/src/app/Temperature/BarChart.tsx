@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/BarChart.css';
 
-const BarChart = ({ position }: { position: 'top' | 'bottom' | 'left' | 'right' }) => {
+const BarChart = ({ position, BarData }:
+  { position: 'top' | 'bottom' | 'left' | 'right', BarData: any }) => {
   // Generate random bar data
-  const generateBars = () => {
-    const count = position === 'left' || position === 'right' ? 70 : 70;
-    return Array.from({ length: count }, () => ({
-      height: Math.random() * 80 + 20,
-      color: Math.random() > 0.5 ? '#ffcc00' : '#00cc66'
+  const generateBars = (BarData: any[]) => {
+    // const count = position === 'left' || position === 'right' ? 58 : 60;
+    return Array.from(BarData, data => ({
+      height: data,
+      color: data > 450 ? '#ffcc00' : '#00cc66'
     }));
   };
 
-  const bars = generateBars();
+  const bars = generateBars(BarData);
+
   return (
     <div className={`bar-container ${position}`}>
       {bars.map((bar, index) => (
@@ -20,8 +22,8 @@ const BarChart = ({ position }: { position: 'top' | 'bottom' | 'left' | 'right' 
           className="bar"
           data-value={`${bar.height.toFixed(2)}℃`}
           style={{
-            height: position === 'top' || position === 'bottom' ? `${bar.height}%` : '100%',
-            width: position === 'left' || position === 'right' ? `${bar.height}%` : '100%',
+            height: position === 'top' || position === 'bottom' ? `${(bar.height - 200) / 3}%` : '100%',
+            width: position === 'left' || position === 'right' ? `${(bar.height - 200) / 3}%` : '100%',
             backgroundColor: bar.color
           }}
         />
