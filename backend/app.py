@@ -4,6 +4,7 @@ import numpy as np
 from ModelPredict import ModelPredict
 import torch.nn as nn
 import time
+from dao import db_insert
 
 app = Flask(__name__)
 CORS(app)
@@ -65,8 +66,15 @@ def get_griddata():  # put application's code here
 
     start = time.time()
 
-    sample_input = ((np.random.rand(232) * 200 + 300)
-                    .reshape(-1, 1))
+    # 模拟输入接口
+    sample_input = (np.random.rand(232) * 200 + 300).reshape(-1, 1)
+    arr = sample_input.reshape(1, -1).tolist()[0]
+    for i in range(len(arr)):
+        arr[i] = round(arr[i], 4)
+    # 存入数据库
+    db_insert(str(arr))
+
+    # 预测
     res = ModelPredict.predict(sample_input)[0]
     res_33 = res[0:28].reshape(4, 7)
     res_45 = res[30:-2].reshape(4, 7)
