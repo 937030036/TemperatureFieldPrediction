@@ -67,7 +67,7 @@ const TemperatureDisplay = () => {
       {/* Top bar chart */}
       <div className="bar-chart top">
         <div className="corner-temp top-left">
-          <div>水冷壁右墙</div>
+          <div>水冷壁前墙</div>
           <div>平均温度: {cornerTemps.topLeft}℃</div>
         </div>
         <BarChart position="top" BarData={BarData.top} />
@@ -87,12 +87,12 @@ const TemperatureDisplay = () => {
       {/* Bottom bar chart */}
       <div className="bar-chart bottom">
         <div className="corner-temp bottom-left">
-          <div>水冷壁右墙</div>
+          <div>水冷壁左墙</div>
           <div>平均温度: {cornerTemps.bottomLeft}℃</div>
         </div>
         <BarChart position="bottom" BarData={BarData.bottom} />
         <div className="corner-temp bottom-right">
-          <div>水冷壁右墙</div>
+          <div>水冷壁后墙</div>
           <div>平均温度: {cornerTemps.bottomRight}℃</div>
         </div>
       </div>

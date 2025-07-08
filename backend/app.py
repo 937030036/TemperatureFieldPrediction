@@ -1,59 +1,15 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import numpy as np
+from NetModel import RegressionModel
+import dao
 from ModelPredict import ModelPredict
-import torch.nn as nn
 import time
-from dao import db_insert
+from dao import db_insert_surface_history, db_insert_predict
+from Validate import get_vaild_data
 
 app = Flask(__name__)
 CORS(app)
-
-
-class RegressionModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.layers = nn.Sequential(
-            # 输入层 -> 隐藏层1
-            nn.Linear(232, 1024),
-            nn.BatchNorm1d(1024),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-
-            nn.Linear(1024, 512),
-            nn.BatchNorm1d(512),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-
-            nn.Linear(512, 256),
-            nn.BatchNorm1d(256),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-
-            # 隐藏层2
-            nn.Linear(256, 128),
-            nn.BatchNorm1d(128),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-
-            # 隐藏层3
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-
-            # 隐藏层4 (可选)
-            # nn.Linear(64, 32),
-            # nn.BatchNorm1d(32),
-            # nn.ReLU(),
-            # nn.Dropout(0.2),
-
-            # 输出层
-            nn.Linear(64, 60)
-        )
-
-    def forward(self, x):
-        return self.layers(x)
 
 
 @app.route('/')
@@ -61,9 +17,14 @@ def hello_world():  # put application's code here
     return 'Hello World!'
 
 
+@app.route('/init_db', methods=['GET'])
+def init_db():  # put application's code here
+    dao.db_init()
+    return 'Database Initialized!', 200
+
+
 @app.route('/grid', methods=['GET'])
 def get_griddata():  # put application's code here
-
     start = time.time()
 
     # 模拟输入接口
@@ -72,10 +33,19 @@ def get_griddata():  # put application's code here
     for i in range(len(arr)):
         arr[i] = round(arr[i], 4)
     # 存入数据库
-    db_insert(str(arr))
+    db_insert_surface_history(str(arr))
+
+    # 处理坏点
+    sample_input = get_vaild_data(sample_input)
 
     # 预测
     res = ModelPredict.predict(sample_input)[0]
+    # 入库
+    arr = res.tolist()
+    for i in range(len(arr)):
+        arr[i] = round(arr[i], 4)
+    db_insert_predict(str(arr))
+
     res_33 = res[0:28].reshape(4, 7)
     res_45 = res[30:-2].reshape(4, 7)
     res_45 = list(res_45)
