@@ -6,5 +6,4 @@
 /backend/build/
 /backend/dist/
 /backend/app.spec
-/backend/__pycache__/
 /backend/history.db
