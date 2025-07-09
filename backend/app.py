@@ -11,16 +11,9 @@ from Validate import get_vaild_data
 app = Flask(__name__)
 CORS(app)
 
-
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
-
-
-@app.route('/init_db', methods=['GET'])
-def init_db():  # put application's code here
-    dao.db_init()
-    return 'Database Initialized!', 200
 
 
 @app.route('/grid', methods=['GET'])
@@ -74,4 +67,5 @@ def get_griddata():  # put application's code here
 
 
 if __name__ == '__main__':
+    dao.db_init()
     app.run()

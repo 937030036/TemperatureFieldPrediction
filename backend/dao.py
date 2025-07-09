@@ -6,6 +6,11 @@ import datetime
 def db_init():
     conn = sqlite3.connect('history.db')
     c = conn.cursor()
+
+    cursor = c.execute('''select name from sqlite_master''')
+    if len([row for row in cursor]) > 0:
+        return
+
     strmain = r"'2DCS_AI_HAD81CT"
     number = 117
     strres_117177 = ""
