@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import numpy as np
+
+import MockData
 from NetModel import RegressionModel
 import dao
 from ModelPredict import ModelPredict
@@ -10,6 +12,7 @@ from Validate import get_vaild_data
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.route('/')
 def hello_world():  # put application's code here
@@ -21,6 +24,7 @@ def get_griddata():  # put application's code here
     start = time.time()
 
     # 模拟输入接口
+    mockdata = MockData.get_one_mock_data().reshape(-1, 1)
     sample_input = (np.random.rand(232) * 200 + 300).reshape(-1, 1)
     arr = sample_input.reshape(1, -1).tolist()[0]
     for i in range(len(arr)):
@@ -68,4 +72,5 @@ def get_griddata():  # put application's code here
 
 if __name__ == '__main__':
     dao.db_init()
+    MockData.mock_init()
     app.run()
