@@ -24,4 +24,6 @@ def get_one_mock_data():
     global res
     global i
     i = i + 1
+    if i >= len(res):
+        i = 0
     return res[i]

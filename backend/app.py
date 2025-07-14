@@ -3,7 +3,8 @@ from flask_cors import CORS
 import numpy as np
 
 import MockData
-from NetModel import RegressionModel
+from NetModel import CustomMultiOutputModel, get_feature_importances
+from sklearn import feature_selection, multioutput
 import dao
 from ModelPredict import ModelPredict
 import time
@@ -25,7 +26,8 @@ def get_griddata():  # put application's code here
 
     # 模拟输入接口
     mockdata = MockData.get_one_mock_data().reshape(-1, 1)
-    sample_input = (np.random.rand(232) * 200 + 300).reshape(-1, 1)
+    # sample_input = (np.random.rand(232) * 200 + 300).reshape(-1, 1)
+    sample_input = mockdata
     arr = sample_input.reshape(1, -1).tolist()[0]
     for i in range(len(arr)):
         arr[i] = round(arr[i], 4)
@@ -35,8 +37,7 @@ def get_griddata():  # put application's code here
     # 处理坏点
     sample_input = get_vaild_data(sample_input)
 
-    # 预测
-    res = ModelPredict.predict(sample_input)[0]
+    res = ModelPredict.predict_data(sample_input.reshape(1, -1))
     # 入库
     arr = res.tolist()
     for i in range(len(arr)):
@@ -44,7 +45,7 @@ def get_griddata():  # put application's code here
     db_insert_predict(str(arr))
 
     res_33 = res[0:28].reshape(4, 7)
-    res_45 = res[30:-2].reshape(4, 7)
+    res_45 = res[30:].reshape(5, 6)
     res_45 = list(res_45)
     tmp = []
     for row in res_45:
