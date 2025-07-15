@@ -45,7 +45,7 @@ def get_griddata():  # put application's code here
     db_insert_predict(str(arr))
 
     res_33 = res[0:28].reshape(4, 7)
-    res_45 = res[30:].reshape(5, 6)
+    res_45 = res[30:46].reshape(4, 4)
     res_45 = list(res_45)
     tmp = []
     for row in res_45:
